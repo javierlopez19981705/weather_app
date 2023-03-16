@@ -38,9 +38,18 @@ dependencies:
   flutter_bloc: ^8.1.2
   bloc: ^8.1.1
   geolocator: ^9.0.2
+  shared_preferences: ^2.0.18
+  flutter_google_places: ^0.3.0
+  google_maps_webservice: ^0.0.19
+  google_api_headers: ^1.5.0+1
+  card_swiper: ^2.0.4
+
   
   weather_repository:
     path: "packages/weather_repository"
+
+  cities_repository:
+    path: "packages/cities_repository"  
     
 
 dev_dependencies:

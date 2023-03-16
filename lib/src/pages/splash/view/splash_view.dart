@@ -11,10 +11,23 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider<SplashCubit>(
-        create: (context) => SplashCubit(),
-        child: const _SplashView(),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).colorScheme.secondary,
+            Theme.of(context).primaryColor,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: BlocProvider<SplashCubit>(
+          create: (context) => SplashCubit(),
+          child: const _SplashView(),
+        ),
       ),
     );
   }

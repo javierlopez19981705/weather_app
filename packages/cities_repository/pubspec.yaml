@@ -1,4 +1,4 @@
-name: weather_service
+name: cities_repository
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -8,13 +8,19 @@ environment:
   flutter: 3.7.0
 
 dependencies:
+  cities_service:
+    path: '../../packages/cities_service'
+
   flutter:
     sdk: flutter
-    
-  http: ^0.13.5
 
+  shared_preferences: ^2.0.18
   weather_repository:
-    path: "../../packages/weather_repository"
+    path: '../../packages/weather_repository'
+
+  
+  
+ 
 
 dev_dependencies:
   flutter_test:

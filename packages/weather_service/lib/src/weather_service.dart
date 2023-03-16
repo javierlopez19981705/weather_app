@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:weather_repository/weather_repository.dart';
 
 ///
 class WeatherService {
@@ -20,14 +21,27 @@ class WeatherService {
   Future<Map<String, dynamic>> fetchWeather({
     required String lat,
     required String lon,
+    required List<ExcludeOptions> excludeOptions,
+    required UnitsWeather units,
   }) async {
     /// lat={lat}&lon={lon}&exclude={part}&appid={API key}
     const endPoint = 'data/3.0/onecall';
+
+    var exclude = '';
+
+    for (var i = 0; i < excludeOptions.length; i++) {
+      if (i == excludeOptions.length - 1) {
+        exclude += excludeOptions[i].name;
+      } else {
+        exclude += '${excludeOptions[i].name},';
+      }
+    }
+
     final parameters = {
       'lat': lat,
       'lon': lon,
-      'exclude': 'current,minutely,hourly',
-      'units': 'metric',
+      'exclude': exclude,
+      'units': units.name,
       'appid': _apiKey,
     };
 
