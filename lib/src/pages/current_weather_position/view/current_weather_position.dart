@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/src/pages/home/cubit/home_cubit.dart';
 import 'package:weather_app/src/utils/spaces.dart';
 import 'package:weather_app/src/widgets/progress_bar_widget.dart';
 import 'package:weather_repository/weather_repository.dart';
@@ -35,7 +36,9 @@ class CurrentWeatherPosition extends StatelessWidget {
     switch (state.status) {
       case CurrentWeatherPositionStatus.loading:
         return const Center(
-          child: ProgressBarWidget(),
+          child: ProgressBarWidget(
+            color: Colors.white,
+          ),
         );
 
       case CurrentWeatherPositionStatus.success:
@@ -152,10 +155,13 @@ class _BodySuccess extends StatelessWidget {
             information: '${weather.daily[0].feelsLike.day}º',
           ),
           spaceWidth(),
-          CardInformation(
-            icon: Icons.air,
-            label: 'Velocidad viento',
-            information: '${weather.daily[0].windSpeed} m/s',
+          BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) => CardInformation(
+              icon: Icons.air,
+              label: 'Velocidad viento',
+              information:
+                  '${weather.daily[0].windSpeed} ${state.units == UnitsWeather.metric ? 'm/s' : 'mil/h'}',
+            ),
           ),
           spaceWidth(),
           CardInformation(

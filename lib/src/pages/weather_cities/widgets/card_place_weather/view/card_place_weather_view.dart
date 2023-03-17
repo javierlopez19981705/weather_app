@@ -1,6 +1,7 @@
 import 'package:cities_repository/cities_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/src/pages/weather_cities/cubit/weather_cities_cubit.dart';
 import 'package:weather_app/src/utils/spaces.dart';
 import 'package:weather_app/src/widgets/progress_bar_widget.dart';
 import 'package:weather_repository/weather_repository.dart';
@@ -52,41 +53,51 @@ class _CardPlaceWeather extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              city.name,
-              style: styleBodyBold,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    city.name,
+                    style: styleSubtitleBold,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.read<WeatherCitiesCubit>().deleteCity(city: city);
+                  },
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
             ),
             BlocBuilder<CardPlaceWeatherCubit, CardPlaceWeatherState>(
               builder: (context, state) {
                 switch (state.status) {
                   case CardPlaceWeatherStatus.loading:
-                    return const ProgressBarWidget();
+                    return const Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: ProgressBarWidget(),
+                      ),
+                    );
 
                   case CardPlaceWeatherStatus.success:
                     return Stack(
                       children: [
-                        // Positioned(
-                        //   // bottom: -(MediaQuery.of(context).size.width * .18),
-                        //   // left: -(MediaQuery.of(context).size.width * .18),
-                        //   child: _image(
-                        //     context: context,
-                        //     weather: state.weather!.daily[0].weather[0].main
-                        //         .toLowerCase(),
-                        //   ),
-                        // ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Text(
-                                    '${state.weather?.daily[0].temp.day.toString()}'),
                                 _image(
                                   context: context,
                                   weather: state
                                       .weather!.daily[0].weather[0].main
                                       .toLowerCase(),
                                 ),
+                                spaceWidth(),
+                                Text(
+                                    '${state.weather?.daily[0].temp.day.toString()}'),
                               ],
                             ),
                             spaceHeight(),
@@ -99,11 +110,15 @@ class _CardPlaceWeather extends StatelessWidget {
                                       '${state.weather!.daily[0].feelsLike.day}',
                                 ),
                                 spaceWidth(),
-                                CardInformation(
-                                  icon: Icons.air,
-                                  label: 'Velocidad viento',
-                                  information:
-                                      '${state.weather?.daily[0].windSpeed} m/s',
+                                BlocBuilder<HomeCubit, HomeState>(
+                                  builder: (context, stateHome) {
+                                    return CardInformation(
+                                      icon: Icons.air,
+                                      label: 'Velocidad viento',
+                                      information:
+                                          '${state.weather?.daily[0].windSpeed}  ${stateHome.units == UnitsWeather.metric ? 'm/s' : 'mil/h'} ',
+                                    );
+                                  },
                                 ),
                                 spaceWidth(),
                                 CardInformation(
@@ -144,7 +159,13 @@ class _CardPlaceWeather extends StatelessWidget {
                     );
 
                   case CardPlaceWeatherStatus.error:
-                    return const Text('Ha ocurrido un error');
+                    return const Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: Text('Ha ocurrido un error'),
+                      ),
+                    );
                 }
               },
             ),

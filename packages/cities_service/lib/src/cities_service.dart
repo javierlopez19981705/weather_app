@@ -25,4 +25,12 @@ class CitiesService {
 
     return sp.getStringList('cities') ?? [];
   }
+
+  ///
+  Future<List<String>> deleteCity(List<String> cities) async {
+    final sp = await prefs;
+    await sp.setStringList('cities', cities);
+
+    return getCities();
+  }
 }

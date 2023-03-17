@@ -26,26 +26,41 @@ class WeatherCitiesView extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => CardPlaceWeather(
-                        city: state.cities[index],
-                      ),
-                      separatorBuilder: (context, index) => spaceHeight(),
-                      itemCount: state.cities.length,
-                    ),
+                    child: state.cities.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'Aun no has agregado ciudades',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : ListView.separated(
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              bottom: 60,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) => CardPlaceWeather(
+                              city: state.cities[index],
+                            ),
+                            separatorBuilder: (context, index) => spaceHeight(),
+                            itemCount: state.cities.length,
+                          ),
                   ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        displayPrediction(context);
-                      },
-                      mini: true,
-                      child: const Icon(Icons.add),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 10,
+                  //   right: 10,
+                  //   child: FloatingActionButton(
+                  //     onPressed: () {
+                  //       displayPrediction(context);
+                  //     },
+                  //     mini: true,
+                  //     child: const Icon(Icons.add),
+                  //   ),
+                  // ),
                 ],
               ),
             );
@@ -64,7 +79,7 @@ class WeatherCitiesView extends StatelessWidget {
     Prediction? p = await PlacesAutocomplete.show(
       context: context,
       apiKey: apiKeyMaps2,
-      radius: 10000000,
+      radius: 100000000000,
       types: ['(regions)'],
       strictbounds: false,
       mode: Mode.fullscreen,
@@ -91,8 +106,6 @@ class WeatherCitiesView extends StatelessWidget {
             latitude: detail.result.geometry!.location.lat,
             longitude: detail.result.geometry!.location.lat,
           );
-
-      print(detail.result);
     }
   }
 }

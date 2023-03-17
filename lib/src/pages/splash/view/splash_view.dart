@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/src/utils/custom_text_style.dart';
+import 'package:weather_app/src/utils/spaces.dart';
 
 import '../../../utils/custom_navigation.dart';
 import '../../../widgets/progress_bar_widget.dart';
@@ -45,15 +47,15 @@ class _SplashView extends StatelessWidget {
             CustomNavigation.navigateHome(context, state.position!);
           }
         },
-        listenWhen: (previous, current) =>
-            current.status == SplashStatus.permissionAllow,
         builder: (context, state) {
           switch (state.status) {
             case SplashStatus.pending:
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
-                  ProgressBarWidget(),
+                  ProgressBarWidget(
+                    color: Colors.white,
+                  ),
                 ],
               );
 
@@ -70,7 +72,9 @@ class _SplashView extends StatelessWidget {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
-                  ProgressBarWidget(),
+                  ProgressBarWidget(
+                    color: Colors.white,
+                  ),
                 ],
               );
           }
@@ -83,8 +87,15 @@ class _SplashView extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const ProgressBarWidget(),
-        const Text('lOS SERVICIOS ESTAN DESACTIVADOS'),
+        const ProgressBarWidget(
+          color: Colors.white,
+        ),
+        spaceHeightDouble(),
+        Text(
+          'Los servicios estan desactivados',
+          style: styleBodyBold.copyWith(color: Colors.white),
+        ),
+        spaceHeight(),
         ElevatedButton(
           onPressed: () {
             context.read<SplashCubit>().requestActiveServices();
@@ -99,8 +110,15 @@ class _SplashView extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const ProgressBarWidget(),
-        const Text('Concede los permisos para acceder a la app'),
+        const ProgressBarWidget(
+          color: Colors.white,
+        ),
+        spaceHeightDouble(),
+        Text(
+          'Concede los permisos para acceder a la app',
+          style: styleBodyBold.copyWith(color: Colors.white),
+        ),
+        spaceHeight(),
         ElevatedButton(
           onPressed: () {
             context.read<SplashCubit>().determinePosition();
@@ -115,7 +133,9 @@ class _SplashView extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: const [
-        ProgressBarWidget(),
+        ProgressBarWidget(
+          color: Colors.white,
+        ),
         Text('Los permisos estan denegados para siempre'),
       ],
     );

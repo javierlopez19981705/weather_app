@@ -47,9 +47,14 @@ class SplashCubit extends Cubit<SplashState> {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    final position = await Geolocator.getCurrentPosition(
+        // forceAndroidLocationManager: true,
+        // desiredAccuracy: LocationAccuracy.bestForNavigation,
+        );
+
     emit(state.copyWith(
       status: SplashStatus.permissionAllow,
-      position: await Geolocator.getCurrentPosition(),
+      position: position,
     ));
   }
 

@@ -25,4 +25,20 @@ class CitiesRepository {
     final citiesData = await citiesService.getCities();
     return citiesData.map(cityModelFromJson).toList();
   }
+
+  ///
+  Future<List<CityModel>> deleteCity({required CityModel city}) async {
+    final citiesData = await citiesService.getCities();
+
+    final index = citiesData
+        .map(cityModelFromJson)
+        .toList()
+        .indexWhere((element) => element.id == city.id);
+
+    citiesData.removeAt(index);
+
+    final cities = await citiesService.deleteCity(citiesData);
+
+    return cities.map(cityModelFromJson).toList();
+  }
 }
