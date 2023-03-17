@@ -1,6 +1,9 @@
+
 Pasos para generar apk android
 
-ejecutar los siguientes comandos en la raiz del proyecto:
+- Clonar repositorio
+
+Ejecutar los siguientes comandos en la raiz del proyecto:
 
 - flutter pub get
 - flutter run build apk --release
