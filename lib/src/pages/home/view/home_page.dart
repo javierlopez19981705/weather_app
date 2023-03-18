@@ -8,9 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/pages/home/cubit/home_cubit.dart';
 import 'package:weather_app/src/pages/weather_cities/cubit/weather_cities_cubit.dart';
 import 'package:weather_app/src/utils/colors.dart';
-import 'package:weather_app/src/utils/spaces.dart';
 import 'package:weather_repository/weather_repository.dart';
 
+import '../../../widgets/circular_button.dart';
 import '../../current_weather_position/cubit/current_weather_position_cubit.dart';
 import '../../current_weather_position/view/current_weather_position.dart';
 import '../../weather_cities/view/weather_cities_view.dart';
@@ -85,35 +85,28 @@ class HomePage extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              ElevatedButton(
+                              CircularButton(
                                 onPressed: () {
                                   context
                                       .read<HomeCubit>()
                                       .changeUnit(unit: UnitsWeather.imperial);
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      state.units == UnitsWeather.imperial
-                                          ? accentColorLight
-                                          : const Color.fromARGB(
-                                              255, 181, 181, 181),
-                                ),
+                                backgroundColor: state.units ==
+                                        UnitsWeather.imperial
+                                    ? accentColorLight
+                                    : const Color.fromARGB(255, 181, 181, 181),
                                 child: const Text('ºF'),
                               ),
-                              spaceWidth(),
-                              ElevatedButton(
+                              CircularButton(
                                 onPressed: () {
                                   context
                                       .read<HomeCubit>()
                                       .changeUnit(unit: UnitsWeather.metric);
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      state.units == UnitsWeather.metric
-                                          ? accentColorLight
-                                          : const Color.fromARGB(
-                                              255, 181, 181, 181),
-                                ),
+                                backgroundColor: state.units ==
+                                        UnitsWeather.metric
+                                    ? accentColorLight
+                                    : const Color.fromARGB(255, 181, 181, 181),
                                 child: const Text('ºC'),
                               ),
                             ],

@@ -47,8 +47,11 @@ class CurrentWeatherPosition extends StatelessWidget {
         );
 
       case CurrentWeatherPositionStatus.error:
-        return const Center(
-          child: Text('Ha ocurrido un error'),
+        return Center(
+          child: Text(
+            'Ha ocurrido un error intentalo mas tarde',
+            style: styleBodyBold.copyWith(color: Colors.white),
+          ),
         );
     }
   }

@@ -163,7 +163,7 @@ class _CardPlaceWeather extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 24),
-                        child: Text('Ha ocurrido un error'),
+                        child: Text('Ha ocurrido un error intentalo mas tarde'),
                       ),
                     );
                 }

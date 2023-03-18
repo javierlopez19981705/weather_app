@@ -36,18 +36,24 @@ class CardPlaceWeatherCubit extends Cubit<CardPlaceWeatherState> {
   late StreamSubscription streamOpen;
 
   getWeather() async {
-    final weather = await weatherRepository.getWeather(
-      lat: city.latitude.toString(),
-      lon: city.longitude.toString(),
-      units: unit,
-    );
+    try {
+      final weather = await weatherRepository.getWeather(
+        lat: city.latitude.toString(),
+        lon: city.longitude.toString(),
+        units: unit,
+      );
 
-    city.weather = weather;
+      city.weather = weather;
 
-    emit(state.copyWith(
-      status: CardPlaceWeatherStatus.success,
-      weather: city.weather,
-    ));
+      emit(state.copyWith(
+        status: CardPlaceWeatherStatus.success,
+        weather: city.weather,
+      ));
+    } catch (_) {
+      emit(state.copyWith(
+        status: CardPlaceWeatherStatus.error,
+      ));
+    }
   }
 
   @override

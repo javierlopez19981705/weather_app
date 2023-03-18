@@ -26,16 +26,22 @@ class CurrentWeatherPositionCubit extends Cubit<CurrentWeatherPositionState> {
   late StreamSubscription streamOpen;
 
   getWeather() async {
-    final resp = await weatherRepository.getWeather(
-      lat: position.latitude.toString(),
-      lon: position.longitude.toString(),
-      units: unit,
-    );
+    try {
+      final resp = await weatherRepository.getWeather(
+        lat: position.latitude.toString(),
+        lon: position.longitude.toString(),
+        units: unit,
+      );
 
-    emit(state.copyWith(
-      status: CurrentWeatherPositionStatus.success,
-      weather: resp,
-    ));
+      emit(state.copyWith(
+        status: CurrentWeatherPositionStatus.success,
+        weather: resp,
+      ));
+    } catch (_) {
+      emit(state.copyWith(
+        status: CurrentWeatherPositionStatus.error,
+      ));
+    }
   }
 
   @override
